@@ -1,0 +1,57 @@
+package com.jeff4w.learn.rabbitmq.transactiondemo.Service.impl;
+
+import com.jeff4w.learn.rabbitmq.transactiondemo.Service.TransactionService;
+import com.jeff4w.learn.rabbitmq.transactiondemo.dao.TransactionDao;
+import com.jeff4w.learn.rabbitmq.transactiondemo.domain.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * @author Lu Weijian
+ * @description 备注
+ * @email lwj@kapark.cn
+ * @date 2019-01-16 13:43
+ */
+@Service
+public class TransactionServiceImpl implements TransactionService {
+    @Autowired
+    private TransactionDao transactionDao;
+
+    @Override
+    @Transactional
+    public Transaction addTransaction(Transaction transaction) throws Exception {
+        // TODO Auto-generated method stub
+        return transactionDao.save(transaction);
+    }
+
+    @Override
+    public void delTransactionById(Long id) {
+        // TODO Auto-generated method stub
+        transactionDao.deleteById(id);
+
+    }
+
+    @Override
+    public void updateTransaction(Transaction transaction) {
+        // TODO Auto-generated method stub
+        transactionDao.save(transaction);
+    }
+
+    @Override
+    public Optional<Transaction> findTransactionById(Long id) {
+        // TODO Auto-generated method stub
+        return transactionDao.findById(id);
+    }
+
+    @Override
+    public List<Transaction> findAllTransaction() {
+        // TODO Auto-generated method stub
+        return transactionDao.findAll();
+
+    }
+
+}
