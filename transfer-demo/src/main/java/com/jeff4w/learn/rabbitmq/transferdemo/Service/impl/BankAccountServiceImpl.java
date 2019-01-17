@@ -5,6 +5,8 @@ import com.jeff4w.learn.rabbitmq.transferdemo.Service.TransactionService;
 import com.jeff4w.learn.rabbitmq.transferdemo.dao.BankAccountDao;
 import com.jeff4w.learn.rabbitmq.transferdemo.domain.BankAccount;
 import com.jeff4w.learn.rabbitmq.transferdemo.domain.Transaction;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,9 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public BankAccount addBankAccount(BankAccount bankAccount) {
@@ -64,7 +69,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     public Boolean transfer(Long fromId, Long toId, BigDecimal money) throws Exception {
         BankAccount bankAccount = findBankAccountById(fromId).get();
         BigDecimal balance = bankAccount.getMoney().subtract(money);
-        if(balance.compareTo(BigDecimal.ZERO) >= 0){
+        if (balance.compareTo(BigDecimal.ZERO) >= 0) {
             bankAccount.setMoney(balance);
             addBankAccount(bankAccount);
 
@@ -75,6 +80,13 @@ public class BankAccountServiceImpl implements BankAccountService {
             transaction.setMoneyTransfer(money);
             transaction.setRemark("已扣款但未加款");
             transactionService.addTransaction(transaction);
+
+            try {
+                rabbitTemplate.convertAndSend("transferdemo", "transfer", transaction);
+            }catch (Exception ex){
+                ex.printStackTrace();
+                System.out.println("asdf");
+            }
 
             return true;
         }

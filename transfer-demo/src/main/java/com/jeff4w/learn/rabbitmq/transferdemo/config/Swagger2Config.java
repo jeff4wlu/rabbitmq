@@ -20,16 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
-/*
-    @Bean
-    public Docket platformApi() {
-
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).forCodeGeneration(true)
-                .select().apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .apis(RequestHandlerSelectors.any())
-                .paths(regex("^.*(?<!error)$"))
-                .build();
-    }*/
 
     @Bean
     public Docket createRestApi() {
@@ -37,15 +27,15 @@ public class Swagger2Config {
                 .apiInfo(apiInfo())
                 .select()
                 //为当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.jeff4w.learn.rabbitmq.transactiondemo.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.jeff4w.learn.rabbitmq.transferdemo.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("swagger-api文档")
-                .description("swagger接入教程")
+                .title("rabbitmq例子的文档")
+                .description("使用rabbitmq事务做分布式事务")
                 .version("1.0")
                 .contact(new Contact("Lu Weijian", "", "jeff4w@163.com"))
                 .build();

@@ -2,6 +2,8 @@
 server:
   port: 1111
 spring:
+  rabbitmq:
+    publisher-confirms: true
   jpa:
     #database-platform: com.jeff4w.example.restapi.config.MySQL5DialectUTF8
     hibernate:
@@ -16,3 +18,5 @@ spring:
     hikari:
       leakDetectionThreshold: 3000
 
+project:
+  sender: true

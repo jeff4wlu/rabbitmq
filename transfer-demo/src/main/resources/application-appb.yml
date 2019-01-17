@@ -2,6 +2,12 @@
 server:
   port: 1112 #为了以后访问项目不用写端口号
 spring:
+  rabbitmq:
+    addresses: 192.168.1.122:5672
+    username: admin
+    password: admin
+    virtual-host: transferdemo
+    connection-timeout: 15000
   jpa:
     #database-platform: com.jeff4w.example.restapi.config.MySQL5DialectUTF8
     hibernate:
@@ -15,4 +21,7 @@ spring:
     password: abcd1234@
     hikari:
       leakDetectionThreshold: 3000
+
+project:
+  sender: false
 
