@@ -20,17 +20,6 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitmqConfig {
 
     @Bean
-    public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.168.1.122", 5672);
-
-        connectionFactory.setUsername("admin");
-        connectionFactory.setPassword("admin");
-        connectionFactory.setVirtualHost("transferdemo");
-        connectionFactory.setPublisherConfirms(true);
-        return connectionFactory;
-    }
-
-    @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }

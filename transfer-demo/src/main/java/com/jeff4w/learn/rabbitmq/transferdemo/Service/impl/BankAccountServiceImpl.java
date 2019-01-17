@@ -81,17 +81,26 @@ public class BankAccountServiceImpl implements BankAccountService {
             transaction.setRemark("已扣款但未加款");
             transactionService.addTransaction(transaction);
 
-            try {
-                rabbitTemplate.convertAndSend("transferdemo", "transfer", transaction);
-            }catch (Exception ex){
-                ex.printStackTrace();
-                System.out.println("asdf");
-            }
+            rabbitTemplate.convertAndSend("transferdemo", "transfer", transaction);
 
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    @Transactional
+    public Boolean receiveTransfer(Transaction transaction) throws Exception {
+        BankAccount bankAccount = findBankAccountById(transaction.getToAccountId()).get();
+        BigDecimal balance = bankAccount.getMoney().add(transaction.getMoneyTransfer());
+        bankAccount.setMoney(balance);
+        addBankAccount(bankAccount);
+
+        transaction.setRemark("分布式转账完成");
+        transactionService.addTransaction(transaction);
+
+        return true;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.jeff4w.learn.rabbitmq.transferdemo.Service;
 
 import com.jeff4w.learn.rabbitmq.transferdemo.domain.BankAccount;
+import com.jeff4w.learn.rabbitmq.transferdemo.domain.Transaction;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,4 +20,5 @@ public interface BankAccountService {
     public Optional<BankAccount> findBankAccountById(Long id);
     public List<BankAccount> findAllBankAccount();
     public Boolean transfer(Long fromId, Long toId, BigDecimal money) throws Exception;
+    public Boolean receiveTransfer(Transaction transaction) throws Exception;
 }

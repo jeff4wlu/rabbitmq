@@ -8,6 +8,9 @@ spring:
     password: admin
     virtual-host: transferdemo
     connection-timeout: 15000
+    listener:
+      simple:
+        acknowledge-mode: manual
   jpa:
     #database-platform: com.jeff4w.example.restapi.config.MySQL5DialectUTF8
     hibernate:
