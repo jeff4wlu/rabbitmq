@@ -4,9 +4,17 @@ import com.jeff4w.learn.rabbitmq.transferdemo.Service.TransactionService;
 import com.jeff4w.learn.rabbitmq.transferdemo.dao.TransactionDao;
 import com.jeff4w.learn.rabbitmq.transferdemo.domain.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +59,15 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> findAllTransaction() {
         // TODO Auto-generated method stub
         return transactionDao.findAll();
+    }
 
+    @Override
+    public List<Transaction> findTransactionByMsgId(String msgId) {
+        // TODO Auto-generated method stub
+        Transaction transaction = new Transaction();
+        transaction.setMsgId(msgId);
+        Example<Transaction> example = Example.of(transaction);
+        return transactionDao.findAll(example);
     }
 
 }

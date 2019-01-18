@@ -11,7 +11,7 @@ import java.util.Date;
  * @date 2019-01-15 20:07
  */
 @Entity
-@Table(name = "t_transaction")
+@Table(name = "t_transaction_msg")
 public class Transaction {
 
     @Id
@@ -23,6 +23,7 @@ public class Transaction {
     private Long toAccountId;
     private BigDecimal moneyTransfer;
     private String remark;
+    private String msgId;
 
     public Long getId() {
         return id;
@@ -66,5 +67,13 @@ public class Transaction {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
     }
 }

@@ -17,4 +17,6 @@ public interface TransactionService {
     public void updateTransaction(Transaction transaction);
     public Optional<Transaction> findTransactionById(Long id);
     public List<Transaction> findAllTransaction();
+
+    public List<Transaction> findTransactionByMsgId(String msgId);
 }
