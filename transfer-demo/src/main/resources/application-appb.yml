@@ -7,7 +7,7 @@ spring:
     username: admin
     password: admin
     virtual-host: transferdemo
-    connection-timeout: 15000
+    #connection-timeout: 15000
     listener:
       simple:
         acknowledge-mode: manual
